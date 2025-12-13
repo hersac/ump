@@ -1,7 +1,7 @@
 use crate::configuracion::ProyectoUmp;
 use std::fs::{self, File};
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 pub fn ejecutar(nombre: &String) {
     let ruta_proyecto = Path::new(nombre);
