@@ -56,6 +56,12 @@ Instala dependencias de forma rápida y segura. Todo queda registrado en tu `ump
 ump add http math
 ```
 
+¿Cambiaste de opinión? Elimínalas igual de fácil:
+
+```bash
+ump remove http
+```
+
 ### Ejecuta y automatiza
 Corre tus scripts definidos de manera sencilla:
 
