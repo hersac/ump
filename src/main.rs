@@ -21,5 +21,8 @@ fn main() {
         Comandos::Crear { nombre } => {
             comandos::crear::ejecutar(nombre);
         }
+        Comandos::Remover { paquetes } => {
+            comandos::remover::ejecutar(paquetes);
+        }
     }
 }

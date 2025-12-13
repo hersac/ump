@@ -15,6 +15,8 @@ pub enum Comandos {
     Inicio,
     #[command(name = "add")]
     Agregar { paquetes: Vec<String> },
+    #[command(name = "remove")]
+    Remover { paquetes: Vec<String> },
     #[command(name = "create")]
     Crear { nombre: String },
     #[command(name = "run")]
