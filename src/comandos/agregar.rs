@@ -250,7 +250,8 @@ fn validar_version_existe(repositorio: &str, version: &str) -> Result<(), String
 }
 
 fn obtener_tags_github(repositorio: &str) -> Result<Vec<TagGithub>, String> {
-    let url = format!("https://api.github.com/repos/{}/tags", repositorio);
+    let repo_path = extraer_repo_github(repositorio)?;
+    let url = format!("https://api.github.com/repos/{}/tags", repo_path);
 
     let cliente = reqwest::blocking::Client::new();
     let respuesta = cliente
@@ -266,10 +267,22 @@ fn obtener_tags_github(repositorio: &str) -> Result<Vec<TagGithub>, String> {
             repositorio
         ));
     }
-
     respuesta
         .json::<Vec<TagGithub>>()
         .map_err(|e| format!("Error parseando respuesta de GitHub: {}", e))
+}
+
+fn extraer_repo_github(url: &str) -> Result<String, String> {
+    let url_limpia = url
+        .trim_start_matches("https://")
+        .trim_start_matches("http://")
+        .trim_end_matches(".git");
+
+    if let Some(pos) = url_limpia.find("github.com/") {
+        Ok(url_limpia[pos + 11..].to_string())
+    } else {
+        Err(format!("URL de repositorio no válida para GitHub: {}", url))
+    }
 }
 
 fn descargar_paquete(
@@ -278,7 +291,7 @@ fn descargar_paquete(
     version: &str,
     directorio_modulos: &Path,
 ) -> Result<(), String> {
-    let url_repo = format!("https://github.com/{}.git", repositorio);
+    let url_repo = repositorio;
     let ruta_destino = directorio_modulos.join(nombre);
 
     if ruta_destino.exists() {
