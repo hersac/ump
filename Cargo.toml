@@ -1,6 +1,6 @@
 [package]
 name = "ump"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2021"
 description = "Gestor de paquetes oficial para el lenguaje Umbral"
 license = "MIT"
