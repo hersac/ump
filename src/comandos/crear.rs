@@ -42,8 +42,10 @@ pub fn ejecutar(nombre: &String) {
 
     let ruta_main = ruta_src.join("main.um");
     let contenido = r#"f: main() {
-    r: ("Hola Mundo");
+    tprint("Hola Mundo");
 }
+
+main();
 "#;
 
     if escribir_archivo(ruta_main.as_path(), contenido) {
