@@ -13,21 +13,26 @@ Antes de empezar, asegúrate de tener el entorno listo.
 ### 1. Instala el Lenguaje Umbral
 Para usar UMP, primero necesitas el motor de Umbral. Ve al repositorio oficial **[hersac/umbral](https://github.com/hersac/umbral)** y descarga la última versión:
 
-- **🐧 Linux**: Descarga e instala el paquete `.dev`.
-- **🪟 Windows**: Descarga y ejecuta el instalador `.exe`.
+- **🐧 Linux**: Descarga e instala el paquete `.deb`.
+- **🪟 Windows**: Descarga y ejecuta el instalador `.exe` (`umbral-setup-<versión>.exe`).
 - **⚙️ Desde código**: Si prefieres compilarlo tú mismo, clona el repo y sigue las instrucciones de compilación.
 
-### 2. Instala UMP (Versión 1.0.0)
+### 2. Instala UMP (Versión 1.0.3)
 Una vez tengas Umbral, consigue el gestor de paquetes oficial:
 
-- **🐧 Linux**: Descarga el paquete `.dev`.
-- **🪟 Windows**: Descarga el ejecutable `.exe`.
+- **🐧 Linux**: Descarga el paquete `.deb` desde los [releases](https://github.com/hersac/ump/releases) e instálalo con `sudo dpkg -i ump_<versión>_amd64.deb`.
+- **🪟 Windows**: Descarga y ejecuta el instalador `ump-setup-<versión>.exe` desde los [releases](https://github.com/hersac/ump/releases).
 - **🦀 Código Fuente**:
   ```bash
   git clone https://github.com/hersac/ump.git
   cd ump
-  cargo install --path .
+  chmod +x install.sh
+  ./install.sh
+  # En Windows: PowerShell -ExecutionPolicy Bypass -File install.ps1
+  # O manual: cargo install --path .
   ```
+
+> 📖 Guía completa con todas las opciones (paquete `.deb`, instalador `.exe`, compilación manual, Docker, solución de problemas): ver [INSTALL.md](./INSTALL.md).
 
 ---
 
