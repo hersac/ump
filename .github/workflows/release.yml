@@ -50,8 +50,14 @@ jobs:
         shell: bash
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
+          echo "VERSION=$VERSION"
+          # Pre-chequeo: el binario debe existir (lo genera `cargo build --release`).
+          # Sin esto makensis falla con un críptico "File: ... failed".
+          test -f target/release/ump.exe || { echo "::error::falta target/release/ump.exe"; ls -l target/release/; exit 1; }
+          # Ruta absoluta: evita que ${__FILEDIR__} quede relativo si el .nsi
+          # evoluciona a usarlo (mismo criterio que en umbral).
           "/c/Program Files (x86)/NSIS/makensis.exe" \
-            -DVERSION="${VERSION}" windows/ump.nsi
+            -DVERSION="${VERSION}" "${GITHUB_WORKSPACE}/windows/ump.nsi"
 
       - name: Subir instalador al release
         uses: softprops/action-gh-release@v2
