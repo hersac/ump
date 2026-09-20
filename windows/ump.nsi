@@ -16,7 +16,7 @@ Unicode true
 ; ------------------------------------------------------------
 !define APPNAME "UMP"
 !ifndef VERSION
-  !define VERSION "1.0.4"
+  !define VERSION "1.1.0"
 !endif
 !define APPVERSION "${VERSION}"
 !define EXE_MAIN "ump.exe"
@@ -34,8 +34,13 @@ ShowUninstDetails show
 ;  Interfaz MUI
 ; ------------------------------------------------------------
 !define MUI_ABORTWARNING
-!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
-!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+!define MUI_ICON "${__FILEDIR__}\..\images\Logo-ump.ico"
+!define MUI_UNICON "${__FILEDIR__}\..\images\Logo-ump.ico"
+!define MUI_HEADERIMAGE
+!define MUI_HEADERIMAGE_BITMAP "${__FILEDIR__}\ump-header.bmp"
+!define MUI_HEADERIMAGE_BITMAP_NOSTRETCH
+!define MUI_WELCOMEFINISHPAGE_BITMAP "${__FILEDIR__}\ump-wizard.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "${__FILEDIR__}\ump-wizard.bmp"
 !define MUI_FINISHPAGE_RUN "$INSTDIR\bin\${EXE_MAIN}"
 !define MUI_FINISHPAGE_RUN_PARAMETERS "--version"
 !define MUI_FINISHPAGE_RUN_TEXT "Ver la versión instalada de UMP"

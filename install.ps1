@@ -2,7 +2,7 @@
 # Ejecutar con: PowerShell -ExecutionPolicy Bypass -File install.ps1
 
 Write-Host "╔════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║   Instalador de UMP v1.0.4             ║" -ForegroundColor Cyan
+Write-Host "║   Instalador de UMP v1.1.0             ║" -ForegroundColor Cyan
 Write-Host "║   Umbral Package Manager               ║" -ForegroundColor Cyan
 Write-Host "╚════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""

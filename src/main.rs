@@ -24,5 +24,11 @@ fn main() {
         Comandos::Remover { paquetes } => {
             comandos::remover::ejecutar(paquetes);
         }
+        Comandos::Update => {
+            comandos::update::ejecutar();
+        }
+        Comandos::Upgrade { paquetes } => {
+            comandos::upgrade::ejecutar(paquetes);
+        }
     }
 }

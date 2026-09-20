@@ -17,7 +17,7 @@ Para usar UMP, primero necesitas el motor de Umbral. Ve al repositorio oficial *
 - **🪟 Windows**: Descarga y ejecuta el instalador `.exe` (`umbral-setup-<versión>.exe`).
 - **⚙️ Desde código**: Si prefieres compilarlo tú mismo, clona el repo y sigue las instrucciones de compilación.
 
-### 2. Instala UMP (Versión 1.0.4)
+### 2. Instala UMP (Versión 1.1.0)
 Una vez tengas Umbral, consigue el gestor de paquetes oficial:
 
 - **🐧 Linux**: Descarga el paquete `.deb` desde los [releases](https://github.com/hersac/ump/releases) e instálalo con `sudo dpkg -i ump_<versión>_amd64.deb`.
@@ -61,6 +61,12 @@ Instala dependencias de forma rápida y segura. Todo queda registrado en tu `ump
 ump add http math
 ```
 
+Instala una versión concreta (pide confirmación y valida el Umbral requerido):
+
+```bash
+ump add http@1.1.0
+```
+
 ¿Cambiaste de opinión? Elimínalas igual de fácil:
 
 ```bash
@@ -74,6 +80,22 @@ Corre tus scripts definidos de manera sencilla:
 ump run start    # Levanta tu aplicación
 ump run dev      # Modo desarrollo
 ump run test     # Ejecuta tus pruebas
+```
+
+### Revisa y aplica actualizaciones
+Consulta qué dependencias tienen versiones nuevas (solo informa):
+
+```bash
+ump update
+```
+
+Actualiza indicando la dependencia. Sin versión sube a la última;
+con `@versión` sube a esa versión concreta (siempre con confirmación
+y validando la versión de Umbral compatible):
+
+```bash
+ump upgrade http          # última disponible
+ump upgrade http@1.1.0    # versión concreta
 ```
 
 ---

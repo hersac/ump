@@ -21,4 +21,8 @@ pub enum Comandos {
     Crear { nombre: String },
     #[command(name = "run")]
     Ejecutar { script: String },
+    #[command(name = "update", about = "Lista dependencias con versiones nuevas disponibles")]
+    Update,
+    #[command(name = "upgrade", about = "Actualiza dependencias a la última o a una versión indicada (paquete[@version])")]
+    Upgrade { paquetes: Vec<String> },
 }
