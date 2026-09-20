@@ -6,7 +6,7 @@
 set -e
 
 echo "╔════════════════════════════════════════╗"
-echo "║   Instalador de UMP v1.0.3             ║"
+echo "║   Instalador de UMP v1.0.4             ║"
 echo "║   Umbral Package Manager               ║"
 echo "╚════════════════════════════════════════╝"
 echo ""

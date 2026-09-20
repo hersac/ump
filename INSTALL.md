@@ -1,7 +1,7 @@
 # Guía de Instalación de UMP
 
 UMP (Umbral Package Manager) es el gestor de paquetes oficial del lenguaje Umbral.
-Esta guía te ayudará a instalar UMP v1.0.3 en tu sistema operativo.
+Esta guía te ayudará a instalar UMP v1.0.4 en tu sistema operativo.
 
 ---
 
@@ -36,7 +36,7 @@ git --version
 Si se dispone de un paquete compilado (`ump_<versión>_amd64.deb` desde los releases):
 
 ```bash
-sudo dpkg -i ump_1.0.3_amd64.deb
+sudo dpkg -i ump_1.0.4_amd64.deb
 ```
 
 El paquete instala:
@@ -423,7 +423,7 @@ Extrae y mueve a una ubicación en tu PATH:
 
 **Linux (.deb):**
 ```bash
-sudo dpkg -i ump_1.0.3_amd64.deb
+sudo dpkg -i ump_1.0.4_amd64.deb
 ```
 
 **Linux (binario suelto):**
@@ -434,7 +434,7 @@ sudo mv ump /usr/local/bin/
 
 **Windows:**
 ```powershell
-# Opción 1: Ejecuta ump-setup-1.0.3.exe
+# Opción 1: Ejecuta ump-setup-1.0.4.exe
 # Opción 2: Extrae el ZIP, mueve ump.exe a C:\Program Files\UMP\
 #           y agrega C:\Program Files\UMP\ al PATH
 ```

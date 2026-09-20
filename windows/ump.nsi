@@ -16,7 +16,7 @@ Unicode true
 ; ------------------------------------------------------------
 !define APPNAME "UMP"
 !ifndef VERSION
-  !define VERSION "1.0.3"
+  !define VERSION "1.0.4"
 !endif
 !define APPVERSION "${VERSION}"
 !define EXE_MAIN "ump.exe"

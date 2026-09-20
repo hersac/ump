@@ -17,7 +17,7 @@ Para usar UMP, primero necesitas el motor de Umbral. Ve al repositorio oficial *
 - **🪟 Windows**: Descarga y ejecuta el instalador `.exe` (`umbral-setup-<versión>.exe`).
 - **⚙️ Desde código**: Si prefieres compilarlo tú mismo, clona el repo y sigue las instrucciones de compilación.
 
-### 2. Instala UMP (Versión 1.0.3)
+### 2. Instala UMP (Versión 1.0.4)
 Una vez tengas Umbral, consigue el gestor de paquetes oficial:
 
 - **🐧 Linux**: Descarga el paquete `.deb` desde los [releases](https://github.com/hersac/ump/releases) e instálalo con `sudo dpkg -i ump_<versión>_amd64.deb`.
