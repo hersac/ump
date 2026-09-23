@@ -1,10 +1,14 @@
-use clap::{Parser, Subcommand};
+use clap::{ArgAction, Parser, Subcommand};
 
 #[derive(Parser)]
 #[command(name = "ump")]
 #[command(about = "Gestor de Paquetes Umbral", long_about = None)]
-#[command(version)]
+#[command(version, disable_version_flag = true)]
 pub struct Interfaz {
+    /// Muestra la versión de UMP
+    #[arg(short = 'v', long = "version", action = ArgAction::Version)]
+    pub version: Option<bool>,
+
     #[command(subcommand)]
     pub comando: Comandos,
 }

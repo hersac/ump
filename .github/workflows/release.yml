@@ -23,10 +23,14 @@ jobs:
       - name: Generar el paquete .deb
         run: cargo deb
 
+      - name: Verificar .deb generado
+        run: ls -l target/debian/*.deb
+
       - name: Subir .deb al release
         uses: softprops/action-gh-release@v2
         with:
           files: target/debian/*.deb
+          fail_on_unmatched_files: true
 
   build-installer:
     runs-on: windows-latest
@@ -50,16 +54,41 @@ jobs:
         shell: bash
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          echo "VERSION=$VERSION"
+          # VIProductVersion solo acepta X.X.X.X numérico (ej: 1.1.1.0).
+          # Tags como v1.1.1-2 deben sanitizarse: quitar sufijo -2/+meta y rellenar a 4 partes.
+          BASE="${VERSION%%-*}"
+          BASE="${BASE%%+*}"
+          IFS='.' read -ra PARTS <<< "$BASE"
+          CLEAN=()
+          for p in "${PARTS[@]}"; do
+            # deja solo dígitos, vacío -> 0
+            n="$(echo "$p" | tr -cd '0-9')"
+            [ -z "$n" ] && n="0"
+            CLEAN+=("$n")
+          done
+          while [ "${#CLEAN[@]}" -lt 4 ]; do CLEAN+=(0); done
+          VI_VERSION="$(IFS=.; echo "${CLEAN[*]:0:4}")"
+          echo "VERSION=$VERSION VI_VERSION=$VI_VERSION"
           # Pre-chequeo: el binario debe existir (lo genera `cargo build --release`).
           # Sin esto makensis falla con un críptico "File: ... failed".
           test -f target/release/ump.exe || { echo "::error::falta target/release/ump.exe"; ls -l target/release/; exit 1; }
-          # Ruta absoluta: evita que ${__FILEDIR__} quede relativo si el .nsi
-          # evoluciona a usarlo (mismo criterio que en umbral).
+          # Ruta absoluta: si se pasa "windows/ump.nsi" como relativa,
+          # ${__FILEDIR__} queda relativo y los File con ${__FILEDIR__}
+          # se resuelven como "windows/windows/...". Con ruta absoluta
+          # ${__FILEDIR__} es absoluto y todo resuelve bien.
+          # -INPUTCHARSET UTF8 (con guion, no /): el .nsi está en UTF-8 con
+          # acentos en comentarios. Con / Git Bash lo convierte en ruta
+          # (C:/Program Files/Git/INPUTCHARSET) y makensis falla.
           "/c/Program Files (x86)/NSIS/makensis.exe" \
-            -DVERSION="${VERSION}" "${GITHUB_WORKSPACE}/windows/ump.nsi"
+            -INPUTCHARSET UTF8 \
+            -DVERSION="${VERSION}" -DVI_VERSION="${VI_VERSION}" "${GITHUB_WORKSPACE}/windows/ump.nsi"
+
+      - name: Verificar instalador generado
+        shell: bash
+        run: ls -l windows/ump-setup-*.exe
 
       - name: Subir instalador al release
         uses: softprops/action-gh-release@v2
         with:
           files: windows/ump-setup-*.exe
+          fail_on_unmatched_files: true

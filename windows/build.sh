@@ -48,8 +48,21 @@ cp "${CROSS_BIN}/ump.exe" target/release/ump.exe
 
 # 4. Generar el instalador
 VERSION=$(grep -m1 '^version' Cargo.toml | sed 's/.*= *"\(.*\)".*/\1/')
-echo "🚀 Generando instalador v${VERSION}..."
-makensis -DVERSION="${VERSION}" windows/ump.nsi
+# VIProductVersion solo acepta X.X.X.X numérico (ej: 1.1.1.0).
+BASE="${VERSION%%-*}"
+BASE="${BASE%%+*}"
+IFS='.' read -ra PARTS <<< "$BASE"
+CLEAN=()
+for p in "${PARTS[@]}"; do
+  n="$(echo "$p" | tr -cd '0-9')"
+  [ -z "$n" ] && n="0"
+  CLEAN+=("$n")
+done
+while [ "${#CLEAN[@]}" -lt 4 ]; do CLEAN+=(0); done
+VI_VERSION="$(IFS=.; echo "${CLEAN[*]:0:4}")"
+echo "🚀 Generando instalador v${VERSION} (VI: ${VI_VERSION})..."
+# -INPUTCHARSET UTF8: el .nsi está en UTF-8 con acentos en comentarios.
+makensis -INPUTCHARSET UTF8 -DVERSION="${VERSION}" -DVI_VERSION="${VI_VERSION}" windows/ump.nsi
 
 echo ""
 echo "✅ Instalador generado: windows/ump-setup-${VERSION}.exe"
