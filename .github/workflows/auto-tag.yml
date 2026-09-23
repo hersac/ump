@@ -6,6 +6,13 @@ name: Auto Tag
 # `Release` (.github/workflows/release.yml) que compila y sube
 # los artefactos (.deb + instalador Windows).
 #
+# IMPORTANTE: el push del tag se hace con el secret RELEASE_PAT
+# (un Personal Access Token con permiso Contents:write), NO con
+# GITHUB_TOKEN. GitHub no dispara workflows desde pushes hechos
+# con GITHUB_TOKEN (evita loops), así que con GITHUB_TOKEN la
+# release quedaría creada pero `Release` jamás correría y no
+# habría .deb ni .exe.
+#
 # Flujo equivalente al versionado manual por tags de umbral
 # (v1.5.5, v1.5.4, ...), pero automatizado.
 
@@ -31,6 +38,16 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
+          # PAT con Contents:write para que el push del tag dispare `Release`.
+          # Ver el encabezado del archivo: con GITHUB_TOKEN no se dispara.
+          token: ${{ secrets.RELEASE_PAT }}
+
+      - name: Verificar secret RELEASE_PAT
+        run: |
+          if [ -z "${{ secrets.RELEASE_PAT }}" ]; then
+            echo "::error::falta el secret RELEASE_PAT (PAT con Contents:write). Créalo en Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
 
       - name: Leer versión de Cargo.toml
         id: version
@@ -47,7 +64,7 @@ jobs:
 
       - name: Crear tag y release si no existen
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
           TAG="${{ steps.version.outputs.tag }}"
           git fetch --tags origin
